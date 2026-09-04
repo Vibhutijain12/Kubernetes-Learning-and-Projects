@@ -71,6 +71,8 @@ Deployment → ReplicaSet → Pods
 - `strategy` controls how updates roll out (`RollingUpdate` is the default, `Recreate` is the alternative).
 - Rollback is built-in: `kubectl rollout undo deployment/<name>`.
 
+see my [Deployment example](./deployment.yml)
+
 ---
 
 ## 4. ReplicaSet
@@ -92,7 +94,7 @@ see my [ReplicaSet example](./replicaSet.yml)
 
 --- 
 
-## 4. DaemonSet
+## 5. DaemonSet
 
 ### What it is
 A **DaemonSet** ensures that a copy of a specific Pod runs on **every node** (or a selected subset of nodes) in the cluster. As nodes are added, Pods are added to them automatically; as nodes are removed, those Pods are garbage collected.
@@ -111,7 +113,3 @@ A **DaemonSet** ensures that a copy of a specific Pod runs on **every node** (or
 - If a new node joins the cluster, the DaemonSet controller automatically schedules a Pod onto it.
 
 see my [daemonSet example](./daemonSet.yml)
-
-
-
-see my [Deployment example](./deployment.yml)
