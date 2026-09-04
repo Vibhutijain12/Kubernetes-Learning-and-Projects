@@ -1,7 +1,7 @@
 
-# Kubernetes Core Concepts: Namespace, Pod, and Deployment
+# Kubernetes Core Concepts
 
-This document explains fundamental building blocks of Kubernetes: **Namespace**, **Pod**, and **Deployment** — what they are, why they exist, and how they relate to each other.
+This document explains fundamental building blocks of Kubernetes: what they are, why they exist, and how they relate to each other.
 
 ---
 
