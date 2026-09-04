@@ -71,4 +71,47 @@ Deployment → ReplicaSet → Pods
 - `strategy` controls how updates roll out (`RollingUpdate` is the default, `Recreate` is the alternative).
 - Rollback is built-in: `kubectl rollout undo deployment/<name>`.
 
+---
+
+## 4. ReplicaSet
+
+### What it is
+A **ReplicaSet** ensures that a specified number of identical Pod replicas are running at all times. If a Pod crashes or is deleted, the ReplicaSet creates a new one to replace it. If there are too many, it deletes the extras.
+
+### Why it matters
+- Provides the self-healing and scaling foundation that Deployments rely on.
+- Guarantees availability — you always have the desired number of Pods running.
+- In practice, you rarely create a ReplicaSet directly — you create a **Deployment**, and the Deployment automatically creates and manages a ReplicaSet for you.
+
+### Key points
+- `replicas` defines the desired number of Pods.
+- `selector` (matching Pod labels) tells the ReplicaSet which Pods it's responsible for.
+- Deployments manage ReplicaSets, and ReplicaSets manage Pods — this is what enables rolling updates and rollbacks (each new version gets its own ReplicaSet).
+
+see my [ReplicaSet example](./replicaSet.yml)
+
+--- 
+
+## 4. DaemonSet
+
+### What it is
+A **DaemonSet** ensures that a copy of a specific Pod runs on **every node** (or a selected subset of nodes) in the cluster. As nodes are added, Pods are added to them automatically; as nodes are removed, those Pods are garbage collected.
+
+### Why it matters
+- Useful for cluster-wide "one-per-node" background tasks rather than app workloads that need a specific replica count.
+- Common use cases:
+  - Log collection agents (e.g., Fluentd, Filebeat)
+  - Monitoring/metrics agents (e.g., Node Exporter, Datadog agent)
+  - Cluster networking components (e.g., CNI plugins like Calico/Weave)
+  - Storage daemons (e.g., Ceph, GlusterFS)
+
+### Key points
+- Unlike a Deployment, you don't set `replicas` — the number of Pods automatically matches the number of eligible nodes.
+- Supports rolling updates, just like Deployments (`RollingUpdate` or `OnDelete` strategy).
+- If a new node joins the cluster, the DaemonSet controller automatically schedules a Pod onto it.
+
+see my [daemonSet example](./daemonSet.yml)
+
+
+
 see my [Deployment example](./deployment.yml)
