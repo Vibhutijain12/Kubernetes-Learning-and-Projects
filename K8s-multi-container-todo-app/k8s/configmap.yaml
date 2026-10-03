@@ -1,0 +1,11 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: todo-config
+  namespace: todo-app
+
+
+data:
+  DB_HOST: "postgres"    # matches the Postgres Service name
+  DB_PORT: "5432"
+  DB_NAME: "tododb"
