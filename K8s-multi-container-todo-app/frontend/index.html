@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>K8s Todo App</title>
+  <style>
+    body { font-family: sans-serif; max-width: 500px; margin: 40px auto; }
+    li { margin: 6px 0; }
+    input { padding: 6px; width: 70%; }
+    button { padding: 6px 12px; }
+  </style>
+</head>
+<body>
+  <h1>Todo List</h1>
+  <input id="taskInput" placeholder="New task" />
+  <button onclick="addTodo()">Add</button>
+  <ul id="todoList"></ul>
+
+  <script>
+    async function loadTodos() {
+      const res = await fetch('/api/todos');
+      const todos = await res.json();
+      const list = document.getElementById('todoList');
+      list.innerHTML = '';
+      todos.forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = `${t.task} ${t.done ? '✅' : ''}`;
+        list.appendChild(li);
+      });
+    }
+
+    async function addTodo() {
+      const input = document.getElementById('taskInput');
+      if (!input.value.trim()) return;
+      await fetch('/api/todos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ task: input.value })
+      });
+      input.value = '';
+      loadTodos();
+    }
+
+    loadTodos();
+  </script>
+</body>
+</html>
